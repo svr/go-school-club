@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test task for Go School</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FF6300">
+
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="text-center">Welcome to the Club!</h1>
+    </header>
+    <main>
+        <form action="" method="POST">
+            <h2>New member</h2>
+            <label>
+                Name:
+                <input type="text" name="name" required maxlength="255">
+            </label>
+            <label>
+                Email:
+                <input type="email" name="name" required  maxlength="255">
+            </label>
+            <div class="form-buttons">
+                <button type="submit">Add</button>
+                <button type="reset">Clear</button>
+            </div>
+        </form>
+
+        <section>
+            <h2 class="text-center">Members</h2>
+
+            <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Registration date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="counter" aria-hidden="true"></td>
+                    <td>Body content 1</td>
+                    <td>Body content 2</td>
+                    <td>17.01.2021</td>
+                  </tr>
+                  <tr>
+                    <td class="counter" aria-hidden="true"></td>
+                    <td>Body content 1</td>
+                    <td>Body content 2</td>
+                    <td>04.08.2020</td>
+                  </tr>
+                </tbody>
+              </table>
+        </section>
+
+    </main>
+
+</body>
+</html>
