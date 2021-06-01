@@ -1,34 +1,55 @@
 package main
 
 import (
+	"bytes"
 	"embed"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"text/template"
+	"time"
 )
+
+type Member struct {
+	Name  string
+	Email string
+	Date  string
+}
 
 //go:embed static
 var staticFiles embed.FS
 
+//go:embed static/favicon.ico
+var faviconFile []byte
+
 //go:embed templates
 var indexHTML embed.FS
 
+var members []Member
+
 func main() {
-	t, err := template.ParseFS(indexHTML, "templates/index.html.tmpl")
+	t, err := template.ParseFS(indexHTML, "templates/*.html.tmpl")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		var path = req.URL.Path
+		req.ParseForm()
+		name := req.Form.Get("member-name")
+		email := req.Form.Get("member-email")
+		if name != "" && email != "" {
+			members = append(members, Member{
+				Name:  name,
+				Email: email,
+				Date:  time.Now().Format("02.01.2006"),
+			})
+		}
+
 		w.Header().Add("Content-Type", "text/html")
 
-		t.Execute(w, struct {
-			Title    string
-			Response string
-		}{Title: "test", Response: path})
-
+		t.ExecuteTemplate(w, "index.html.tmpl", struct {
+			Members []Member
+		}{Members: members})
 	})
 
 	serveStaticAssets()
@@ -46,4 +67,8 @@ func main() {
 
 func serveStaticAssets() {
 	http.Handle("/static/", http.FileServer(http.FS(staticFiles)))
+
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeContent(w, r, "favicon.ico", time.Now(), bytes.NewReader(faviconFile))
+	})
 }

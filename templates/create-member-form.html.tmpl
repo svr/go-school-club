@@ -1,0 +1,18 @@
+{{ define "create-member-form" }}
+    <form action="" method="POST">
+        <h2>New member</h2>
+        <label>
+            Name:
+            <input type="text" name="member-name" required maxlength="255">
+        </label>
+        <label>
+            Email:
+            <input type="text" name="member-email" required  maxlength="255">
+        </label>
+        <div class="form-buttons">
+            <button type="submit">Add</button>
+            <button type="reset">Clear</button>
+        </div>
+    </form>
+{{ end }}
+

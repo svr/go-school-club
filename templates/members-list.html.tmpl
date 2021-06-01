@@ -1,0 +1,22 @@
+{{ define "members-list" }}
+    <table>
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Registration date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range . }}
+                <tr>
+                    <td class="counter" aria-hidden="true"></td>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .Email }}</td>
+                    <td>{{ .Date }}</td>
+                </tr>
+            {{ end }}
+        </tbody>
+    </table>
+{{ end }}

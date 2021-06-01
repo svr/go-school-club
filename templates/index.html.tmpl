@@ -14,49 +14,16 @@
         <h1 class="text-center">Welcome to the Club!</h1>
     </header>
     <main>
-        <form action="" method="POST">
-            <h2>New member</h2>
-            <label>
-                Name:
-                <input type="text" name="name" required maxlength="255">
-            </label>
-            <label>
-                Email:
-                <input type="email" name="name" required  maxlength="255">
-            </label>
-            <div class="form-buttons">
-                <button type="submit">Add</button>
-                <button type="reset">Clear</button>
-            </div>
-        </form>
+        {{template "create-member-form"}}
 
         <section>
             <h2 class="text-center">Members</h2>
 
-            <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Registration date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="counter" aria-hidden="true"></td>
-                    <td>Body content 1</td>
-                    <td>Body content 2</td>
-                    <td>17.01.2021</td>
-                  </tr>
-                  <tr>
-                    <td class="counter" aria-hidden="true"></td>
-                    <td>Body content 1</td>
-                    <td>Body content 2</td>
-                    <td>04.08.2020</td>
-                  </tr>
-                </tbody>
-              </table>
+            {{if .Members}}
+                {{template "members-list" .Members }}
+            {{ else }}
+              <p>No members yet. Please use form above to add some
+            {{ end }}
         </section>
 
     </main>
