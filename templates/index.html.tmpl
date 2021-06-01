@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Test task for Go School</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="App for adding members to the list">
   <meta name="theme-color" content="#FF6300">
 
   <link rel="stylesheet" type="text/css" href="static/styles.css">
@@ -14,7 +15,7 @@
         <h1 class="text-center">Welcome to the Club!</h1>
     </header>
     <main>
-        {{template "create-member-form"}}
+        {{template "create-member-form" .Member }}
 
         <section>
             <h2 class="text-center">Members</h2>

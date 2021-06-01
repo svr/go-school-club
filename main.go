@@ -10,10 +10,9 @@ import (
 	"time"
 )
 
-type Member struct {
-	Name  string
-	Email string
-	Date  string
+type TemplateData struct {
+	Members []Member
+	Member  Member
 }
 
 //go:embed static
@@ -28,28 +27,30 @@ var indexHTML embed.FS
 var members []Member
 
 func main() {
-	t, err := template.ParseFS(indexHTML, "templates/*.html.tmpl")
-	if err != nil {
-		log.Fatal(err)
-	}
+	t := template.Must(template.ParseFS(indexHTML, "templates/*.html.tmpl"))
 
-	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		req.ParseForm()
-		name := req.Form.Get("member-name")
-		email := req.Form.Get("member-email")
-		if name != "" && email != "" {
-			members = append(members, Member{
-				Name:  name,
-				Email: email,
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html")
+		templateData := TemplateData{Members: members, Member: Member{Name: "", Email: "", Date: ""}}
+
+		if r.Method == http.MethodPost {
+			r.ParseForm()
+
+			member := &Member{
+				Name:  r.Form.Get("member-name"),
+				Email: r.Form.Get("member-email"),
 				Date:  time.Now().Format("02.01.2006"),
-			})
+			}
+
+			if member.Validate() {
+				members = append(members, *member)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+			} else {
+				templateData.Member = *member
+			}
 		}
 
-		w.Header().Add("Content-Type", "text/html")
-
-		t.ExecuteTemplate(w, "index.html.tmpl", struct {
-			Members []Member
-		}{Members: members})
+		t.ExecuteTemplate(w, "index.html.tmpl", templateData)
 	})
 
 	serveStaticAssets()
@@ -59,7 +60,7 @@ func main() {
 		port = "3000"
 	}
 
-	err = http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

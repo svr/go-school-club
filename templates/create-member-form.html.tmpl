@@ -1,13 +1,19 @@
 {{ define "create-member-form" }}
-    <form action="" method="POST">
+    <form action="" method="POST" novalidate>
         <h2>New member</h2>
         <label>
             Name:
-            <input type="text" name="member-name" required maxlength="255">
+            <input type="text" name="member-name"  value="{{ .Name }}"  required maxlength="255">
+            {{ if and .Errors .Errors.Name}}
+                <p class="error">{{ .Errors.Name }}</p>
+            {{ end }}
         </label>
         <label>
             Email:
-            <input type="text" name="member-email" required  maxlength="255">
+            <input type="text" name="member-email" value="{{ .Email }}" required  maxlength="255">
+            {{ if and .Errors .Errors.Email }}
+                <p class="error">{{ .Errors.Email }}</p>
+            {{ end }}
         </label>
         <div class="form-buttons">
             <button type="submit">Add</button>
@@ -15,4 +21,3 @@
         </div>
     </form>
 {{ end }}
-
