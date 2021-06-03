@@ -5,7 +5,7 @@ ENV GO_SCHOOL_CLUB_PORT 3000
 WORKDIR /app
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o server .
+RUN CGO_ENABLED=0 go test -v && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o server .
 
 
 
