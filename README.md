@@ -6,7 +6,7 @@ Docker image for the app was published to [Docker hub](https://hub.docker.com/r/
 To run the app on a local machine the following command can be used:
 
 ```
-docker container run --rm -p 3000:3000 svr3/go-school-club:0.0.3
+docker container run --rm -p 3000:3000 svr3/go-school-club:0.0.4
 ```
 and point browser to [http://localhost:3000](http://localhost:3000)
 

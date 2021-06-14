@@ -42,10 +42,11 @@ func main() {
 				Date:  time.Now().Format("02.01.2006"),
 			}
 
-			if member.Validate() {
+			if member.Validate(members) {
 				members = append(members, *member)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
+				w.WriteHeader(http.StatusBadRequest)
 				templateData.Member = *member
 			}
 		}
