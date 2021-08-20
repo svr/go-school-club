@@ -1,6 +1,6 @@
-FROM golang:1.16.0-alpine3.13 AS build
+FROM golang:1.17.0-alpine3.14 AS build
 
-ENV GO_SCHOOL_CLUB_PORT 3000
+ENV PORT 3000
 
 WORKDIR /app
 COPY . .

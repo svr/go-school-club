@@ -56,7 +56,7 @@ func main() {
 
 	serveStaticAssets()
 
-	port := os.Getenv("GO_SCHOOL_CLUB_PORT")
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
 	}
